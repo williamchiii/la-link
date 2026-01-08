@@ -2,7 +2,9 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import { BrowserRouter } from 'react-router'
+import { Toaster } from 'react-hot-toast'
 import App from './App.jsx'
+import './index.css'
 import 'bootstrap/dist/css/bootstrap.css'
 
 
@@ -14,6 +16,7 @@ createRoot(document.getElementById('root')).render(
     <BrowserRouter>
     <GoogleOAuthProvider clientId={googleClientID}>
     <App />
+    <Toaster position="top-center" />
     </GoogleOAuthProvider>
     </BrowserRouter>
   </StrictMode>,
