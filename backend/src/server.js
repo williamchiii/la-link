@@ -1,8 +1,9 @@
 import express from "express";
+import { connectDB } from "../config/database.js"
 
 const app = express();
-
-const PORT = 5001;
+const PORT = process.env.PORT;
+connectDB();
 
 app.listen(PORT, () => {
     console.log(`Server started on PORT: ${PORT}`)
