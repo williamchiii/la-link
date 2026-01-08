@@ -13,12 +13,14 @@ function HomeAuthpage(){
         <p className="bodyText">
             A simple and quick to use multifunctional URL shortener
         </p>
-        <GoogleLogin onSuccess={(credentialResponse) => {
-            console.log(jwtDecode(credentialResponse.credential))
-            navigate("/dashboard")
+        <GoogleLogin 
+            text="continue_with"
+            onSuccess={(credentialResponse) => {
+                console.log(jwtDecode(credentialResponse.credential))
+                navigate("/dashboard")
             }}
-            onError={() => console.log("Login Failed")}/>
-        
+            onError={() => console.log("Login Failed")}>
+        </GoogleLogin>
     </div>
     
 );
