@@ -1,2 +1,2 @@
 # LaLink
-A simple and quick to use multifunctional URL shortener
+A simple and quick to use multifunctional URL shortener built using the MERN stack.
