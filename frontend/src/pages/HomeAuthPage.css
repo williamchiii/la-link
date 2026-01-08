@@ -10,14 +10,9 @@
     font-weight: 300;
 }
 .background{
-  background-color: #0a1020;
-  min-height: 100vh;
-  width: 100%;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-bottom: 40vh;
-
+  padding-bottom: 10vh;
 }
