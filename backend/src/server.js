@@ -1,3 +1,5 @@
+//this is the thing that runs (essential a main file)
+
 import express from "express";
 import { connectDB } from "../config/database.js"
 
