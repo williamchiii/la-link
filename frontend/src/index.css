@@ -5,7 +5,3 @@
         font-family: Inter, system-ui, sans-serif;
     }
 }
-
-@plugin "daisyui" {
-    themes: "night";
-}

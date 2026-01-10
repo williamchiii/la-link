@@ -3,7 +3,7 @@ import HomeAuthPage from "./pages/HomeAuthPage";
 import Dashboard from "./pages/Dashboard";
 
 function App(){
-  return <div className="min-h-screen bg-base-100">
+  return <div>
     <Routes>
         <Route path = "/" element = {<HomeAuthPage />} /> 
         <Route path = "/dashboard" element = {<Dashboard />} /> 

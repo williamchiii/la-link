@@ -7,13 +7,14 @@ function HomeAuthpage(){
     const navigate = useNavigate()
 
     return (
-    <div className="min-h-screen bg-base-100 flex flex-col items-center justify-center -mt-6 ">
-        <div className=" text-white text-6xl font-light mb-2">LaLink</div>
-        <div className="text-white text-[20px] font-light mb-3">
-            A simple and quick to use multifunctional URL shortener
+    <div className="min-h-screen bg-[#101729] flex flex-col items-center justify-center  ">
+        <div className=" text-white text-7xl font-light mb-2">LaLink</div>
+        <div className="text-white text-3xl font-light italic mb-3">
+            Easy, simple, shorten, analytics. Nothing else.
         </div>
         <GoogleLogin 
             text="continue_with"
+            shape="pill"
             onSuccess={(credentialResponse) => {
                 console.log(jwtDecode(credentialResponse.credential))
                 navigate("/dashboard")
