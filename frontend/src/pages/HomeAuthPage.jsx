@@ -8,9 +8,9 @@ function HomeAuthpage(){
     const navigate = useNavigate()
 
     return (
-    <div className="background">
-        <h1 className="mainTitle">LaLink</h1>
-        <p className="bodyText">
+    <div className="min-h-screen bg-base-100 flex flex-col items-center justify-center -mt-6 ">
+        <h1 className=" text-white text-7xl font-light">LaLink</h1>
+        <p className="text-white text-[20px] font-light">
             A simple and quick to use multifunctional URL shortener
         </p>
         <GoogleLogin 
