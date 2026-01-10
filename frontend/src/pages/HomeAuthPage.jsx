@@ -8,10 +8,10 @@ function HomeAuthpage(){
 
     return (
     <div className="min-h-screen bg-base-100 flex flex-col items-center justify-center -mt-6 ">
-        <h1 className=" text-white text-7xl font-light">LaLink</h1>
-        <p className="text-white text-[20px] font-light">
+        <div className=" text-white text-6xl font-light mb-2">LaLink</div>
+        <div className="text-white text-[20px] font-light mb-3">
             A simple and quick to use multifunctional URL shortener
-        </p>
+        </div>
         <GoogleLogin 
             text="continue_with"
             onSuccess={(credentialResponse) => {
