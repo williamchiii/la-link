@@ -1,4 +1,3 @@
-import "./App.css";
 import {Route, Routes} from "react-router"
 import HomeAuthPage from "./pages/HomeAuthPage";
 import Dashboard from "./pages/Dashboard";
