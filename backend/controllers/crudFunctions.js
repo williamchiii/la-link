@@ -43,12 +43,12 @@ export async function redirectShortLink(req, res) {
             {new:true}
         );
         if (!link){
-            return res.status(400).send("Short link not found");
+            return res.status(404).json({error: "Short link not found"});
         }
         //redirect to original URL
         res.redirect(link.longURL);
     } catch(error){
-        res.status(500).send("Redirect failed");
+        res.status(500).json({error: "Redirect failed"});
     }
 };
 
@@ -86,7 +86,7 @@ export async function deleteLink(req, res) {
 };
 
 //STATS: get stats for a short link
-//Route: GET /api/links/:shortCode/status
+//Route: GET /api/links/:shortCode/stats
 export async function getLinkStats(req, res) {
     try{
         const {shortCode} = req.params;
