@@ -29,38 +29,82 @@ export async function createShortLink(req, res) {
         res.status(500).json({error: "Failed to create shortLink"})
     }
 };
-export async function redirectShortLink() {
-    try{
 
+//REDIRECT: redirect short link and increment clicks
+//Route: GET /:shortCode
+export async function redirectShortLink(req, res) {
+    try{
+        const {shortCode} = req.params;
+
+        //find link and increment clicks
+        const link = await url.findOneAndUpdate(
+            {shortCode},
+            {$inc: {clicks:1}},
+            {new:true}
+        );
+        if (!link){
+            return res.status(400).send("Short link not found");
+        }
+        //redirect to original URL
+        res.redirect(link.longURL);
     } catch(error){
-        
+        res.status(500).send("Redirect failed");
     }
 };
-export async function getShortLink() {
-    try{
 
+//READ: get one short link by shortCode
+//Route: GET /api/links/:shortCode
+export async function getShortLink(req, res) {
+    try{
+        const {shortCode} = req.params;
+        const link = await url.findOne({shortCode});
+        if(!link){
+            return res.status(404).json({error: "Link not found"});
+        }
+        res.json(link);
     } catch(error){
-        
+        res.status(500).json({error: "Failed to fetch link"})
     }
 };
-export async function updateShortLink() {
-    try{
 
+//DELETE: delete a short link
+//Route: DELETE /api/links/:id
+export async function deleteLink(req, res) {
+    try{
+        const {id} = req.params;
+
+        //delete link by mongoDB document ID
+        const deletedLink = await url.findByIdAndDelete(id);
+        if(!deletedLink){
+            return res.status(404).json({error: "link to delete not found"});
+        }
+        //confirm deletion
+        res.json({message: "link deleted successfully"});
     } catch(error){
-        
+        res.status(500).json({error:"Failed to delete link"});
     }
 };
-export async function deleteLink() {
-    try{
 
-    } catch(error){
-        
-    }
-};
-export async function getLinkStats() {
+//STATS: get stats for a short link
+//Route: GET /api/links/:shortCode/status
+export async function getLinkStats(req, res) {
     try{
-
-    } catch(error){
+        const {shortCode} = req.params;
+        //find link by shortCode
+        const link = await url.findOne({shortCode});
         
+        if(!link){
+            return res.status(404).json({error: "link not found"});
+        }
+        //return only stats related data
+        res.json({
+            shortURL: link.shortURL,
+            longURL: link.longURL,
+            clicks: link.clicks,
+            createdAt: link.createdAt,
+            updatedAt: link.updatedAt,
+        });
+    } catch(error){
+        res.status(500).json({error: "Failed to fetch link stats"})
     }
 };

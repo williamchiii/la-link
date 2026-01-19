@@ -3,7 +3,6 @@ import {
     createShortLink,
     redirectShortLink,
     getShortLink,
-    updateShortLink,
     deleteLink,
     getLinkStats,
 } from "../controllers/crudFunctions.js";
@@ -15,9 +14,6 @@ router.post("/api/links", createShortLink);
 
 //READ one link
 router.get("/api/links/:shortCode", getShortLink);
-
-//UPDATE link
-router.put("/api/links/:id", updateShortLink);
 
 //DELETE link
 router.delete("/api/links/:id", deleteLink);
