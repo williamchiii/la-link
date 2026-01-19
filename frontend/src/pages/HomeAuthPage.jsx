@@ -72,50 +72,52 @@ function HomeAuthpage(){
     //when user copies the shortened link to clickboard, it gives a toast message
     const handleCopy = async() => {
         await navigator.clipboard.writeText(shortURL);
-        toast.success("Copied link to clickboard!");
+        toast("Link copied to clipboard!", {
+            icon: "📋",
+        });
     };
 
     return (
     <div className="min-h-screen bg-[#101729] flex flex-col items-center justify-center  ">
         <div className=" text-white text-7xl font-medium italic mb-2">LaLink</div>
-        <div className="text-white text-3xl font-light italic mb-3">
+        <div className="text-white text-3xl font-light italic mb-6">
             Easy, simple, shorten, analytics. Nothing else.
         </div>
         <div className="mb-3">
-            <form onSubmit={handleSubmit} className="flex w-full max-w-xl">
+            <form onSubmit={handleSubmit} className="flex w-full max-w-xl gap-1">
                 <input type="url"
                     name="longURL"
                     placeholder="Enter long link here" 
                     value={longURL} onChange={(e) => setLongURL(e.target.value)}
                     required
                     //input box styling
-                    className="flex-1 px-10 py-2 text-white round-1-md outline-1" />
+                    className="flex-1 px-10 py-2 text-white rounded-full outline-1" />
                 <button
                     type="submit"
                     disabled={isSubmitting}
                     //button styling
-                    className="btn btn-primary"
+                    className="btn btn-primary px-2 rounded-full"
                 >
                     {isSubmitting ? "Shortening..." :"Shorten"}
                 </button>
         </form>
         {shortURL && (
-            <div className="text-white mt-3">
-                <a
-                    href = {shortURL}
-                    target="_blank"
-                    rel = "noopener noreferrer"
-                    className="text-blue-300 underline"
-                >
-                    {shortURL}
-                </a>
-            <button
-                onClick={handleCopy}
-                className="btn btn-secondary"    
-                >
-                Copy
-                </button>
-            </div>
+        <div className="flex items-center mt-3 gap-3">
+            <a
+                href = {shortURL}
+                target="_blank"
+                rel = "noopener noreferrer"
+                className="text-blue-300 underline"
+            >
+                {shortURL}
+            </a>
+        <button
+            onClick={handleCopy}
+            className="btn btn-secondary"    
+            >
+            Copy
+            </button>
+        </div>
         )}
        
         </div>
