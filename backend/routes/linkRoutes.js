@@ -22,6 +22,12 @@ router.delete("/api/links/:id", deleteLink);
 router.get("/api/links/:shortCode/stats", getLinkStats);
 
 //REDIRECT (must be last)
-router.get(/^\/[a-z0-9]{5,8}$/, redirectShortLink);
+const shortCodeRegex = /^[A-Za-z0-9_-]{6}$/;
+router.get("/:shortCode", (req, res, next) => {
+    if(!shortCodeRegex.test(req.params.shortCode)){
+        return next();
+    }
+    return redirectShortLink(req,res,next);
+}); //regex validation
 
 export default router;

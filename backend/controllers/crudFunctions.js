@@ -32,9 +32,9 @@ export async function createShortLink(req, res) {
 
 //REDIRECT: redirect short link and increment clicks
 //Route: GET /:shortCode
-export async function redirectShortLink(req, res) {
+export async function redirectShortLink(req, res, next) {
     try{
-        const {shortCode} = req.path.slice(1); //removing leading /
+        const shortCode = req.params.shortCode;
 
         //find link and increment clicks
         const link = await url.findOneAndUpdate(
