@@ -4,28 +4,40 @@ import express from "express";
 import linkRoutes from "../routes/linkRoutes.js"
 import { connectDB } from "../config/database.js";
 import cors from "cors";
+import path from "path";
 
 dotenv.config();
-
 const app = express();
-
-//connect to database
-connectDB();
+const PORT = process.env.PORT || 5001;
+const __dirname = path.resolve();
 
 //parse JSON bodies
 app.use(express.json());
 
-//allows CORS
-app.use(cors({
+//allows CORS if not in production
+if(process.env.NODE_ENV !== "production"){
+    app.use(cors({
     origin: "http://localhost:5173",
     credentials: true,
-}));
+    }));
+}
 
 //register routes
 app.use(linkRoutes);
 
-//start server
-const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => {
+//use this if its in production
+if(process.env.NODE_ENV === "production"){
+    app.use(express.static(path.join(__dirname, "../frontend/dist"))); //serve optimized react app
+    //if we have anything other than our api routes, let react handle it
+    app.use((req,res) => {
+        res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
+    });
+}
+
+
+//connect to database then start server
+connectDB().then(() => {
+    app.listen(PORT, () => {
     console.log(`Server started on PORT: ${PORT}`)
+    })
 });
