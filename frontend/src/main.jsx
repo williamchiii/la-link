@@ -16,7 +16,7 @@ createRoot(document.getElementById('root')).render(
     <BrowserRouter>
     <GoogleOAuthProvider clientId={googleClientID}>
     <App />
-    <Toaster position="top-center" />
+    <Toaster position="top-center" reverseOrder={true} />
     </GoogleOAuthProvider>
     </BrowserRouter>
   </StrictMode>,

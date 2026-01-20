@@ -2,6 +2,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router';
 import { useState } from 'react';
+import { isValidURL, normalizeURL } from '../lib/utils.js';
 import toast from "react-hot-toast";
 
 //This page is for a public home page that includes the URL shotener.
@@ -23,12 +24,16 @@ function HomeAuthpage(){
         setError("");
         setShortURL("");
 
-        const trimmedURL = longURL.trim(); //remove whitespace from inputted url
+        let trimmedURL = longURL.trim(); //remove whitespace from inputted url
         if(!trimmedURL){
-            toast.error("Please enter a URL to shorten.");
+            toast("Please enter a URL",{icon:"❗️"});
             return;
         }
-
+        trimmedURL = normalizeURL(trimmedURL);
+        if(!isValidURL(trimmedURL)){
+            toast.error("Please enter a valid URL");
+            return;
+        }
         setIsSubmitting(true); //disable submit button
 
         try{
@@ -48,7 +53,7 @@ function HomeAuthpage(){
                     throw new Error("Server returned an invalid response");
                 }
                 if(!res.ok){
-                    throw new Error(data?.error || "Failed to shorten URL.");
+                    throw new Error("Failed to shorten URL.");
                 }
                 return data;
             });
@@ -84,7 +89,7 @@ function HomeAuthpage(){
             Easy, simple, shorten, analytics. Nothing else.
         </div>
         <div className="mb-6 w-full flex justify-center flex-col items-center">
-            <form onSubmit={handleSubmit} className="flex w-full max-w-2xl gap-1">
+            <form noValidate onSubmit={handleSubmit} className="flex w-full max-w-2xl gap-1">
                 <input type="url"
                     name="longURL"
                     placeholder="Enter long link here" 

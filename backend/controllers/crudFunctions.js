@@ -43,7 +43,7 @@ export async function redirectShortLink(req, res) {
             {new:true}
         );
         if (!link){
-            return res.status(404).json({error: "Short link not found"});
+            return res.status(404).json({error: "Short link not found. Make sure the long link is valid"});
         }
         //redirect to original URL
         res.redirect(link.longURL);
