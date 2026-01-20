@@ -83,8 +83,8 @@ function HomeAuthpage(){
         <div className="text-white text-3xl font-light italic mb-6">
             Easy, simple, shorten, analytics. Nothing else.
         </div>
-        <div className="mb-3">
-            <form onSubmit={handleSubmit} className="flex w-full max-w-xl gap-1">
+        <div className="mb-6 w-full flex justify-center flex-col items-center">
+            <form onSubmit={handleSubmit} className="flex w-full max-w-2xl gap-1">
                 <input type="url"
                     name="longURL"
                     placeholder="Enter long link here" 
