@@ -22,6 +22,6 @@ router.delete("/api/links/:id", deleteLink);
 router.get("/api/links/:shortCode/stats", getLinkStats);
 
 //REDIRECT (must be last)
-router.get("/:shortCode", redirectShortLink);
+router.get(/^\/[a-z0-9]{5,8}$/, redirectShortLink);
 
 export default router;
