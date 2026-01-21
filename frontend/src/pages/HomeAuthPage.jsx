@@ -6,7 +6,7 @@ import { isValidURL, normalizeURL } from '../lib/utils.js';
 import toast from "react-hot-toast";
 
 //This page is for a public home page that includes the URL shotener.
-//Allows users to shorten links without O Auth login, however it does not have click analyics
+//Allows users to shorten links without OAuth login, however it does not have click analyics
 
 function HomeAuthpage(){
     const navigate = useNavigate() //react router navigation
