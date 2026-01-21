@@ -14,6 +14,7 @@ function HomeAuthpage(){
     const [shortURL, setShortURL] = useState(""); //stte for the short URL that is ret
     const [error, setError] = useState(""); //state for errors
     const [isSubmitting, setIsSubmitting] = useState(false); //var for disable button while submitting
+    const [isRateLimited, setIsRateLimited] = useState(false); //variable for rate limiting logic
 
     //get the base url from the .env file, or use default local host port 5001
     const baseURL = import.meta.env.VITE_BASE_URL || "http://localhost:5001";
@@ -45,15 +46,20 @@ function HomeAuthpage(){
                 },
                 body: JSON.stringify({ longURL: trimmedURL }),
             }).then(async (res) => {
-                let data;
+
+                let data = null;
                 //parse JSON if it exists
                 try{
                     data = await res.json();
-                } catch{
+                } catch (error){
                     throw new Error("Server returned an invalid response");
                 }
+                //rate limiting logic
+                if (res.status === 429){
+                    throw new Error("Too many requests, try again later!");
+                }
                 if(!res.ok){
-                    throw new Error("Failed to shorten URL.");
+                    throw new Error("Failed to shorten URL");
                 }
                 return data;
             });
@@ -81,7 +87,7 @@ function HomeAuthpage(){
             icon: "📋",
         });
     };
-
+ 
     return (
     <div className="min-h-screen bg-[#101729] flex flex-col items-center justify-center  ">
         <div className=" text-white text-7xl font-medium italic mb-2">LaLink</div>

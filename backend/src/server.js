@@ -15,9 +15,6 @@ const __dirname = path.resolve();
 //parse JSON bodies
 app.use(express.json());
 
-//rate limiter middleware
-app.use(rateLimiter);
-
 //allows CORS if not in production
 if(process.env.NODE_ENV !== "production"){
     app.use(cors({
@@ -25,6 +22,10 @@ if(process.env.NODE_ENV !== "production"){
     credentials: true,
     }));
 }
+
+//rate limiter middleware only to api routes
+app.set("trust proxy", true);
+app.use("/api", rateLimiter);
 
 //register routes
 app.use(linkRoutes);
