@@ -16,7 +16,8 @@ function HomeAuthpage(){
     const [isSubmitting, setIsSubmitting] = useState(false); //var for disable button while submitting
     const [isRateLimited, setIsRateLimited] = useState(false); //variable for rate limiting logic
 
-    //get the base url from the .env file, or use default local host port 5001
+    //get the backend base url from the .env file, or use default local host port 5001
+    //this basically tells the frontend where to send API requests
     const baseURL = import.meta.env.VITE_BASE_URL || "http://localhost:5001";
 
     //handleSubmit logic, sends longURL to backend to generate shorURL
