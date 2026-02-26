@@ -90,20 +90,23 @@ function HomeAuthpage(){
     };
  
     return (
-    <div className="min-h-screen bg-[#101729] flex flex-col items-center justify-center  ">
+    <div className="min-h-screen bg-[#101729] flex flex-col items-center justify-center">
         <div className=" text-white text-7xl font-medium italic mb-2">LaLink</div>
-        <div className="text-white text-3xl font-light italic mb-6">
+        <div className="text-white text-[clamp(0.9rem,4vw,1.75rem)] font-light italic mb-6">
             Easy, simple, shorten, analytics. Nothing else.
         </div>
+        
         <div className="mb-6 w-full flex justify-center flex-col items-center">
-            <form noValidate onSubmit={handleSubmit} className="flex w-full max-w-2xl gap-1">
+            <form noValidate onSubmit={handleSubmit} className="flex items-center gap-2
+    w-[clamp(15rem,92vw,42rem)]
+    mx-auto">
                 <input type="url"
                     name="longURL"
                     placeholder="Enter long link here" 
                     value={longURL} onChange={(e) => setLongURL(e.target.value)}
                     required
                     //input box styling
-                    className="flex-1 px-10 py-2 text-white rounded-full outline-1" />
+                    className="flex-1 min-w-0 px-6 py-2 rounded-full outline-2 outline-white/15 text-white bg-white/10" />
                 <button
                     type="submit"
                     disabled={isSubmitting}
@@ -119,12 +122,14 @@ function HomeAuthpage(){
                 href = {shortURL}
                 target="_blank"
                 rel = "noopener noreferrer"
+                //shortURL styling
                 className="text-blue-300 underline"
             >
                 {shortURL}
             </a>
         <button
             onClick={handleCopy}
+            //styles the copy button
             className="btn btn-secondary"    
             >
             Copy
