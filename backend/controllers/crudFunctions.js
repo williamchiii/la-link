@@ -1,7 +1,10 @@
 import url from "../models/url.js"
 import genShortCode from "../utils/genShortCode.js"
+import { redis } from "../config/redis.js"
 
-//CREATE: create a new shortened URL
+const CACHE_TTL = 60 * 60 * 24 * 30 //TTL in cacche for 30 days (seconds format)
+
+//CREATE: create a new shortened URL and load it into cache
 //Route: POST /api/links
 export async function createShortLink(req, res) {
     try{
@@ -23,6 +26,8 @@ export async function createShortLink(req, res) {
             shortURL,
             createdBy: req.user?.id || null,
         });
+        //pre-warm the cache so first click is a cache hit
+        await redis.set(`link:${shortCode}`, longURL, { ex: CACHE_TTL})
         //return the created link
         res.status(201).json(newLink);
     } catch(error){
@@ -35,17 +40,26 @@ export async function createShortLink(req, res) {
 export async function redirectShortLink(req, res, next) {
     try{
         const shortCode = req.params.shortCode;
-
+        //check cache hit
+        const cached = await redis.get(`link:${shortCode}`)
+        //cache hit
+        if (cached){
+            url.updateOne({shortCode}, { $inc: {clicks: 1}}).catch(() => {})  //clicks++ on MongoDB
+            redis.expire(`link:${shortCode}`, CACHE_TTL).catch(() => {}) //reset cache TTL timer
+            return res.redirect(cached)
+        }
+        //cache miss
         //find link and increment clicks
         const link = await url.findOneAndUpdate(
             {shortCode},
             {$inc: {clicks:1}},
-            {new:true}
+            {new:true} //returns updated doc instead of old one
         );
         if (!link){
             return res.status(404).json({error: "Short link not found. Make sure the long link is valid"});
         }
-        //redirect to original URL
+        //redirect to original long URL
+        await redis.set(`link:${shortCode}`, link.longURL, { ex: CACHE_TTL })
         res.redirect(link.longURL);
     } catch(error){
         res.status(500).json({error: "Redirect failed"});
@@ -72,12 +86,12 @@ export async function getShortLink(req, res) {
 export async function deleteLink(req, res) {
     try{
         const {id} = req.params;
-
         //delete link by mongoDB document ID
         const deletedLink = await url.findByIdAndDelete(id);
         if(!deletedLink){
             return res.status(404).json({error: "link to delete not found"});
         }
+        await redis.del(`link:${deletedLink.shortCode}`) //invalidate cache
         //confirm deletion
         res.json({message: "link deleted successfully"});
     } catch(error){

@@ -3,9 +3,11 @@ import {Redis} from "@upstash/redis";
 import dotenv from "dotenv";
 dotenv.config();
 
+//retrieve and export redis creds
+export const redis = Redis.fromEnv()
 //rate limiter that allows 60 requests per minute.
 const ratelimit = new Ratelimit({
-    redis: Redis.fromEnv(),
+    redis,
     limiter: Ratelimit.slidingWindow(60, "60 s"),
 });
 
