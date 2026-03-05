@@ -3,7 +3,7 @@ import {Redis} from "@upstash/redis";
 import dotenv from "dotenv";
 dotenv.config();
 
-//This is used for ratelimiting and caching
+//This is used for ratelimiting and caching.
 
 //retrieve and export redis creds
 export const redis = Redis.fromEnv()
