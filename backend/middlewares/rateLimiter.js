@@ -11,7 +11,7 @@ const rateLimiter = async(req, res, next) => {
         //if under the rate limit continue to next middleware
         next()
     } catch(error){
-        console.log("rate limit error")
+        logger.warning("rate limit error")
         //pass error to Express's global error handler
         next(error)
     }

@@ -1,6 +1,7 @@
 import {Ratelimit} from "@upstash/ratelimit";
 import {Redis} from "@upstash/redis";
 import dotenv from "dotenv";
+
 dotenv.config();
 
 //This is used for ratelimiting and caching.

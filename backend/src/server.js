@@ -2,6 +2,7 @@
 import dotenv from "dotenv";
 import express from "express";
 import linkRoutes from "../routes/linkRoutes.js"
+import logger from "../utils/logger.js"
 import { connectDB } from "../config/database.js";
 import cors from "cors";
 import path from "path";
@@ -43,6 +44,6 @@ if(process.env.NODE_ENV === "production"){
 //connect to database then start server
 connectDB().then(() => {
     app.listen(PORT, () => {
-    console.log(`Server started on PORT: ${PORT}`)
+    logger.info(`Server started on PORT: ${PORT}`)
     })
 });

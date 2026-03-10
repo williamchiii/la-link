@@ -5,8 +5,6 @@ import { BrowserRouter } from 'react-router'
 import { Toaster } from 'react-hot-toast'
 import App from './App.jsx'
 import './index.css'
-import 'bootstrap/dist/css/bootstrap.css'
-
 
 
 const googleClientID = import.meta.env.VITE_GOOGLE_CLIENT_ID
