@@ -6,7 +6,7 @@ import logger from "../utils/logger.js"
 import { connectDB } from "../config/database.js";
 import cors from "cors";
 import path from "path";
-import rateLimiter from "../middlewares/rateLimiter.js";
+import { strictRateLimiter, generousRateLimiter } from "../middlewares/rateLimiter.js";
 
 dotenv.config();
 const app = express();
@@ -26,7 +26,6 @@ if(process.env.NODE_ENV !== "production"){
 
 //rate limiter middleware only to api routes
 app.set("trust proxy", true);
-app.use("/api", rateLimiter);
 
 //register routes
 app.use(linkRoutes);

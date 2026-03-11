@@ -8,10 +8,12 @@ dotenv.config();
 
 //retrieve and export redis creds
 export const redis = Redis.fromEnv()
-//rate limiter that allows 60 requests per minute.
-const ratelimit = new Ratelimit({
-    redis,
-    limiter: Ratelimit.slidingWindow(60, "60 s"),
-});
 
-export default ratelimit;
+export const strictRateLimit = new Ratelimit({
+    redis,
+    limiter: Ratelimit.slidingWindow(60, "60 s"), //60 per 60s
+});
+export const generousRateLimit = new Ratelimit({
+    redis,
+    limiter: Ratelimit.slidingWindow(500, "60 s"), //500 per 1 minute
+});
