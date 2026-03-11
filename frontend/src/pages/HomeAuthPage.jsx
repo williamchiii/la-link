@@ -91,7 +91,7 @@ function HomeAuthpage(){
  
     return (
     <div className="min-h-screen bg-[#101729] flex flex-col items-center justify-center">
-        <div className=" text-white text-7xl font-medium italic mb-2">LaLink</div>
+        <div className=" text-white text-7xl font-bold italic mb-2">LaLink</div>
         <div className="text-white text-[clamp(0.9rem,4vw,1.75rem)] font-light italic mb-6">
             Easy, simple, shorten, analytics. Nothing else.
         </div>
@@ -111,7 +111,7 @@ function HomeAuthpage(){
                     type="submit"
                     disabled={isSubmitting}
                     //button styling
-                    className="btn btn-primary px-2 rounded-full"
+                    className="btn rounded-full join-item"
                 >
                     {isSubmitting ? "Shortening..." :"Shorten"}
                 </button>
@@ -130,7 +130,7 @@ function HomeAuthpage(){
         <button
             onClick={handleCopy}
             //styles the copy button
-            className="btn btn-secondary"    
+            className="btn btn-primary"    
             >
             Copy
             </button>

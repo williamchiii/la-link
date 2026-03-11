@@ -2,10 +2,11 @@
 import dotenv from "dotenv";
 import express from "express";
 import linkRoutes from "../routes/linkRoutes.js"
+import logger from "../utils/logger.js"
 import { connectDB } from "../config/database.js";
 import cors from "cors";
 import path from "path";
-import rateLimiter from "../middlewares/rateLimiter.js";
+import { strictRateLimiter, generousRateLimiter } from "../middlewares/rateLimiter.js";
 
 dotenv.config();
 const app = express();
@@ -25,7 +26,6 @@ if(process.env.NODE_ENV !== "production"){
 
 //rate limiter middleware only to api routes
 app.set("trust proxy", true);
-app.use("/api", rateLimiter);
 
 //register routes
 app.use(linkRoutes);
@@ -43,6 +43,6 @@ if(process.env.NODE_ENV === "production"){
 //connect to database then start server
 connectDB().then(() => {
     app.listen(PORT, () => {
-    console.log(`Server started on PORT: ${PORT}`)
+    logger.info(`Server started on PORT: ${PORT}`)
     })
 });
