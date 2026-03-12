@@ -3,19 +3,21 @@ import { createRoot } from 'react-dom/client'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import { BrowserRouter } from 'react-router'
 import { Toaster } from 'react-hot-toast'
+import { AuthProvider } from './lib/AuthContext.jsx'
 import App from './App.jsx'
 import './index.css'
 
-
 const googleClientID = import.meta.env.VITE_GOOGLE_CLIENT_ID
 
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-    <GoogleOAuthProvider clientId={googleClientID}>
-    <App />
-    <Toaster position="top-center" reverseOrder={true} />
-    </GoogleOAuthProvider>
+      <GoogleOAuthProvider clientId={googleClientID}>
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+        <Toaster position="top-center" reverseOrder={true} />
+      </GoogleOAuthProvider>
     </BrowserRouter>
   </StrictMode>,
-)
+);
