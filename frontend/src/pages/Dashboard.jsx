@@ -1,7 +1,7 @@
 import React from 'react'
 import toast from 'react-hot-toast'
 import Navbar from '../components/Navbar.jsx'
-import UrlShortener from '../components/urlShortener.jsx'
+import UrlShortener from '../components/UrlShortener.jsx'
 import { useAuth } from '../lib/AuthContext.jsx'
 
 const Dashboard = () => {

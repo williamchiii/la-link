@@ -2,7 +2,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router';
 import { useAuth } from '../lib/AuthContext.jsx';
-import UrlShortener from "../components/urlShortener.jsx";
+import UrlShortener from "../components/UrlShortener.jsx";
 
 //This page is for a public home page that includes the URL shotener.
 //Allows users to shorten links without OAuth login, however it does not have click analyics
