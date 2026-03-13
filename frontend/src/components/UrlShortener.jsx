@@ -126,7 +126,7 @@ const UrlShortener = () => {
           <button
             onClick={handleCopy}
             //styles the copy button
-            className="btn btn-primary"
+            className="btn btn-primary transform transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-lg"
           >
             Copy
           </button>

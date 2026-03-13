@@ -6,10 +6,10 @@ import { useAuth } from '../lib/AuthContext.jsx';
 
 const Navbar = () => {
   const navigate = useNavigate()
-  const { setUser } = useAuth()
+  const { logout } = useAuth()
   function handleLogout(){
     googleLogout()
-    setUser(null)
+    logout()
     toast('Logged Out', {icon: '👋'})
     navigate("/")
   }
