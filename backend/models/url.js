@@ -35,9 +35,7 @@ const urlSchema = new mongoose.Schema(
     },
     createdBy: {
         //links ULR to user account
-        //objectID: mongoDBid, ref: user, default:null -> allow annonymous lnks
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        type: String,
         default: null,
     },
     },

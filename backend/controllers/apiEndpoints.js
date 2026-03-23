@@ -81,16 +81,47 @@ export async function getShortLink(req, res) {
     }
 };
 
+//get the user generated links based on the id
+export async function getUserLinks(req, res){
+    try{
+        const links = await url
+            .find({createdBy: req.user.id})
+            .sort({createdAt: -1});
+        const totalClicks = links.reduce((sum, link) => sum + link.clicks, 0);
+
+        res.json({
+            totalLinks: links.length,
+            totalClicks,
+            links: links.map((link) => ({
+                id: link._id,
+                shortURL: link.shortURL,
+                shortCode: link.shortCode,
+                longURL: link.longURL,
+                clicks: link.clicks,
+                createdAt: link.createdAt
+            }))
+        })
+    }
+    catch(err){
+        res.status(500).json({error: "Failed to fetch user links"});
+    }
+}
+
 //DELETE: delete a short link
 //Route: DELETE /api/links/:id
 export async function deleteLink(req, res) {
     try{
         const {id} = req.params;
-        //delete link by mongoDB document ID
-        const deletedLink = await url.findByIdAndDelete(id);
-        if(!deletedLink){
+        //find link first to check ownership
+        const link = await url.findById(id);
+        if(!link){
             return res.status(404).json({error: "link to delete not found"});
         }
+        //only the owner can delete their link
+        if (link.createdBy !== req.user.id){
+            return res.status(403).json({error: "Not authorized to delete this link"});
+        }
+        const deletedLink = await url.findByIdAndDelete(id);
         await redis.del(`link:${deletedLink.shortCode}`) //invalidate cache
         //confirm deletion
         res.json({message: "link deleted successfully"});
