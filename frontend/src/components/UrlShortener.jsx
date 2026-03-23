@@ -1,11 +1,11 @@
-import { GoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router";
 import { useState } from "react";
 import { isValidURL, normalizeURL } from "../lib/utils.js";
+import { useAuth } from "../lib/AuthContext.jsx";
 import toast from "react-hot-toast";
 
-const UrlShortener = () => {
+const UrlShortener = ({ onLinkCreated } = {}) => {
+  const { credential } = useAuth();
   const navigate = useNavigate(); //react router navigation
   const [longURL, setLongURL] = useState(""); //state for the long URL input
   const [shortURL, setShortURL] = useState(""); //stte for the short URL that is ret
@@ -40,6 +40,7 @@ const UrlShortener = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          ...(credential && { Authorization: `Bearer ${credential}` }),
         },
         body: JSON.stringify({ longURL: trimmedURL }),
       }).then(async (res) => {
@@ -67,6 +68,7 @@ const UrlShortener = () => {
       });
       //save returned shortURL
       setShortURL(data.shortURL); //gets the shortURL part from the backend JSON response
+      onLinkCreated?.(); //refresh analytics list
     } catch (error) {
       //display error message
       setError(error.message || "Request Failed.");

@@ -1,23 +1,28 @@
 import express from "express";
 import {strictRateLimiter, generousRateLimiter} from "../middlewares/rateLimiter.js";
+import { authenticateUser } from "../middlewares/auth.js";
 import {
     createShortLink,
     redirectShortLink,
     getShortLink,
+    getUserLinks,
     deleteLink,
     getLinkStats,
-} from "../controllers/crudFunctions.js";
+} from "../controllers/apiEndpoints.js";
 
 const router = express.Router();
 
-//CREATE short link
-router.post("/api/links", strictRateLimiter, createShortLink);
+//CREATE short link, optional auth
+router.post("/api/links", strictRateLimiter, authenticateUser({ required: false }), createShortLink);
+
+//GET link via user id, required auth
+router.get("/api/links/user/me", strictRateLimiter, authenticateUser(), getUserLinks);
 
 //READ one link
 router.get("/api/links/:shortCode", strictRateLimiter, getShortLink);
 
-//DELETE link
-router.delete("/api/links/:id", strictRateLimiter, deleteLink);
+//DELETE link, required auth + ownership check
+router.delete("/api/links/:id", strictRateLimiter, authenticateUser(), deleteLink);
 
 //STATS
 router.get("/api/links/:shortCode/stats", strictRateLimiter, getLinkStats);

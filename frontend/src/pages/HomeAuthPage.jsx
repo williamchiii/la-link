@@ -25,7 +25,7 @@ function HomeAuthpage(){
           shape="pill"
           onSuccess={(credentialResponse) => {
             const decoded = jwtDecode(credentialResponse.credential);
-            setUser(decoded);
+            setUser(decoded, credentialResponse.credential);
             navigate("/dashboard");
           }}
           onError={() => console.log("Login Failed")}
