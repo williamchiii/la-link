@@ -18,14 +18,14 @@ router.post("/api/links", strictRateLimiter, authenticateUser({ required: false 
 //GET link via user id, required auth
 router.get("/api/links/user/me", strictRateLimiter, authenticateUser(), getUserLinks);
 
-//READ one link
-router.get("/api/links/:shortCode", strictRateLimiter, getShortLink);
+//READ one link, owner only
+router.get("/api/links/:shortCode", strictRateLimiter, authenticateUser(), getShortLink);
 
 //DELETE link, required auth + ownership check
 router.delete("/api/links/:id", strictRateLimiter, authenticateUser(), deleteLink);
 
-//STATS
-router.get("/api/links/:shortCode/stats", strictRateLimiter, getLinkStats);
+//STATS, owner only
+router.get("/api/links/:shortCode/stats", strictRateLimiter, authenticateUser(), getLinkStats);
 
 //REDIRECT (must be last). Rate limited to prevent DoS
 const shortCodeRegex = /^[A-Za-z0-9_-]{6}$/;

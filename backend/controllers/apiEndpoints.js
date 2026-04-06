@@ -72,7 +72,7 @@ export async function getShortLink(req, res) {
     try{
         const {shortCode} = req.params;
         const link = await url.findOne({shortCode});
-        if(!link){
+        if(!link || link.createdBy !== req.user.id){
             return res.status(404).json({error: "Link not found"});
         }
         res.json(link);
@@ -138,7 +138,7 @@ export async function getLinkStats(req, res) {
         //find link by shortCode
         const link = await url.findOne({shortCode});
         
-        if(!link){
+        if(!link || link.createdBy !== req.user.id){
             return res.status(404).json({error: "link not found"});
         }
         //return only stats related data
