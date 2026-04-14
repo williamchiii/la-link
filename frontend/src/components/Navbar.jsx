@@ -14,7 +14,7 @@ const Navbar = () => {
     navigate("/")
   }
   return (
-  <div className="navbar bg-[#172340] shadow-sm">
+  <div className="navbar shadow-sm">
       <div className="flex-1">
         <Link to="/" className="text-white text-4xl font-bold italic ml-3"> 
         LaLink

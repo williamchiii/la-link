@@ -103,7 +103,12 @@ const UrlShortener = ({ onLinkCreated } = {}) => {
           onChange={(e) => setLongURL(e.target.value)}
           required
           //input box styling
-          className="flex-1 min-w-0 px-6 py-2 rounded-full outline-2 outline-white/15 text-white bg-white/10 transform transition-all duration-200 ease-in-out hover:scale-102 hover:shadow-lg"
+          className="flex-1 min-w-0 px-6 py-2 rounded-full 
+            bg-white/7 backdrop-blur-md 
+            border border-white/20 
+            text-white 
+            transform transition-all duration-200 ease-in-out 
+            hover:scale-102 hover:bg-white/15 hover:shadow-lg"
         />
         <button
           type="submit"

@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui";
+@import "shadcn/tailwind.css";
 
 @layer base {
     html, body {
