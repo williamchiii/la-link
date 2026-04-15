@@ -4,25 +4,25 @@ const AuthContext = createContext(null);
 
 export function AuthProvider({children}){
     const [user, setUserState] = useState(() => {
-        const stored = localStorage.getItem("user");
+        const stored = sessionStorage.getItem("user");
         return stored ? JSON.parse(stored) : null;
     });
 
     const [credential, setCredential] = useState(() => {
-        return localStorage.getItem("credential") || null;
+        return sessionStorage.getItem("credential") || null;
     });
 
     const setUser = (newUser, newCredential = null) => {
         setUserState(newUser);
         if (newUser){
-            localStorage.setItem("user", JSON.stringify(newUser));
+            sessionStorage.setItem("user", JSON.stringify(newUser));
             if (newCredential){
-                localStorage.setItem("credential", newCredential)
+                sessionStorage.setItem("credential", newCredential)
                 setCredential(newCredential)
             }
         } else{
-            localStorage.removeItem("user")
-            localStorage.removeItem("credential")
+            sessionStorage.removeItem("user")
+            sessionStorage.removeItem("credential")
             setCredential(null)
         }
     }

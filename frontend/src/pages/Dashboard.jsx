@@ -11,7 +11,11 @@ const Dashboard = () => {
   const baseURL = import.meta.env.VITE_BASE_URL || "http://localhost:5001";
 
   const fetchLinks = () => {
-    if (!credential) return;
+    if (!credential){
+      setLoading(false);
+      return;
+    }
+    setLoading(true)
     fetch(`${baseURL}/api/links/user/me`, {
       headers: { Authorization: `Bearer ${credential}` },
     })
