@@ -1,13 +1,15 @@
 import { nanoid } from "nanoid";
 
-const genShortCode = async (urlModel, length = 6) => {
-    let shortCode;
-    let exists = true;
-    while(exists) {
-        shortCode = nanoid(length);
-        exists = await urlModel.exists({ shortCode });
+const genShortCode = async (urlModel, length = 6, maxAttemptsPerLength = 5) => {
+    while (true) {
+        for (let i = 0; i < maxAttemptsPerLength; i++) {
+            const shortCode = nanoid(length);
+            if (!(await urlModel.exists({ shortCode }))) {
+                return shortCode;
+            }
+        }
+        length++;
     }
-    return shortCode;
 };
 
 export default genShortCode;
