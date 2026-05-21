@@ -1,5 +1,5 @@
 # LaLink
-LaLink is a deployed minimalist URL Shortener built using the MERN stack that converts long links into clean, shareable short links. Features URL validation and automatic normalizatiom, toast-driven feedback, one-click copy functionality, etc. Built using a react frontend. RESTful Express backend with full CRUD endpoints and integrated Upstash Redis for rate limiting to prevent abuse. 
+LaLink is a deployed minimalist URL shortener that converts long links into clean, shareable short links. Built with a React + Vite frontend and a RESTful Express backend with MongoDB. Features URL validation and automatic normalization, Google OAuth authentication, toast-driven feedback, one-click copy functionality, and an animated background. Backend includes full CRUD endpoints, Upstash Redis for rate limiting and caching, and structured logging.
 
 ## Install Instructions
 0. Make sure to have all the dependencies (also check .env.example)
