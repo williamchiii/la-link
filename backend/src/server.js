@@ -25,7 +25,7 @@ if(process.env.NODE_ENV !== "production"){
 }
 
 //rate limiter middleware only to api routes
-app.set("trust proxy", true);
+app.set("trust proxy", 1);
 
 //register routes
 app.use(linkRoutes);
