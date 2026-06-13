@@ -28,7 +28,7 @@ router.delete("/api/links/:id", strictRateLimiter, authenticateUser(), deleteLin
 router.get("/api/links/:shortCode/stats", strictRateLimiter, authenticateUser(), getLinkStats);
 
 //REDIRECT (must be last). Rate limited to prevent DoS
-const shortCodeRegex = /^[A-Za-z0-9_-]{6}$/;
+const shortCodeRegex = /^[A-Za-z0-9_-]{6,}$/;
 router.get("/:shortCode", generousRateLimiter,(req, res, next) => {
     if(!shortCodeRegex.test(req.params.shortCode)){
         return next();

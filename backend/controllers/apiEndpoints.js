@@ -56,7 +56,7 @@ export async function redirectShortLink(req, res, next) {
             {new:true} //returns updated doc instead of old one
         );
         if (!link){
-            return res.status(404).json({error: "Short link not found. Make sure the long link is valid"});
+            return next();
         }
         //redirect to original long URL
         await redis.set(`link:${shortCode}`, link.longURL, { ex: CACHE_TTL })
