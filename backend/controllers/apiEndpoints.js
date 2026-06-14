@@ -1,5 +1,6 @@
 import url from "../models/url.js"
 import genShortCode from "../utils/genShortCode.js"
+import { isValidLongURL } from "../utils/validateURL.js";
 import { redis } from "../config/redis.js"
 
 const CACHE_TTL = 60 * 60 * 24 * 30 //TTL in cacche for 30 days (seconds format)
@@ -14,6 +15,10 @@ export async function createShortLink(req, res) {
         //validate the input
         if (!longURL){
             return res.status(400).json({error: "longURL is required"});
+        }
+        //server side validation (in case it slips thru frontend)
+        if (!isValidLongURL(longURL)){
+            return res.status(400).json({error: "Long URL is not valid (server validated)"});
         }
         //generate a unique short code
         const shortCode = await genShortCode(url);
