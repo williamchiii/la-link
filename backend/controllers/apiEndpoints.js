@@ -2,6 +2,7 @@ import url from "../models/url.js"
 import genShortCode from "../utils/genShortCode.js"
 import { isValidLongURL } from "../utils/validateURL.js";
 import { redis } from "../config/redis.js"
+import logger from "../utils/logger.js"
 
 const CACHE_TTL = 60 * 60 * 24 * 30 //TTL in cacche for 30 days (seconds format)
 
@@ -31,8 +32,12 @@ export async function createShortLink(req, res) {
             shortURL,
             createdBy: req.user?.id || null,
         });
-        //pre-warm the cache so first click is a cache hit
-        await redis.set(`link:${shortCode}`, longURL, { ex: CACHE_TTL})
+        //pre-warm the cache so first click is a cache hit (best-effort, never fatal)
+        try {
+            await redis.set(`link:${shortCode}`, longURL, { ex: CACHE_TTL})
+        } catch (err) {
+            logger.warning(`cache warm failed for ${shortCode}`)
+        }
         //return the created link
         res.status(201).json(newLink);
     } catch(error){
